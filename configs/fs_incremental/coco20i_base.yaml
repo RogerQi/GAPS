@@ -1,0 +1,92 @@
+name: 'GIFS_coco20i_base'
+task: 'few_shot_incremental'
+input_dim: (3, 512, 512)
+num_classes: 61
+meta_training_num_classes: 61 # (15 annotated class in splitted training set + 1 background)
+meta_testing_num_classes: 81
+save_model: True
+
+SYSTEM:
+  num_workers: 16
+
+BACKBONE:
+  network: 'deeplabv3_resnet101_renorm'
+  pooling: False
+  use_pretrained: True
+  pretrained_path: "/data/pretrained_model/resnet101-5d3b4d8f.pth"
+
+CLASSIFIER:
+  classifier: "seg_cos"
+
+LOSS:
+  loss: 'semantic_nllloss'
+
+DATASET:
+  dataset: 'coco_20i'
+  COCO20i:
+    folding: 999
+  TRANSFORM:
+    TRAIN:
+      transforms: ('normalize', )
+      joint_transforms: ('joint_random_scale_crop', 'joint_random_horizontal_flip')
+      TRANSFORMS_DETAILS:
+        NORMALIZE:
+          mean: (0.485, 0.456, 0.406)
+          sd: (0.229, 0.224, 0.225)
+        crop_size: (512, 512)
+    TEST:
+      transforms: ('normalize', )
+      TRANSFORMS_DETAILS:
+        NORMALIZE:
+          mean: (0.485, 0.456, 0.406)
+          sd: (0.229, 0.224, 0.225)
+        crop_size: (512, 512)
+
+TRAIN:
+  max_epochs: 20
+  batch_size: 32
+  initial_lr: 0.007
+  lr_scheduler: "polynomial"
+  log_interval: 200
+  OPTIMIZER:
+    type: "SGD"
+    momentum: 0.9
+    weight_decay: 1e-4
+
+# GIFS
+TASK_SPECIFIC:
+  GIFS:
+    fine_tuning: True
+    pseudo_base_label: False
+    max_iter: 400
+    num_shots: 5
+    ft_batch_size: 16
+    backbone_lr: 1e-3
+    classifier_lr: 1e-2
+    feature_reg_lambda: 0.5
+    classifier_reg_lambda: 0.0
+    context_aware_sampling_prob: 0.9
+    sequential_dataset_num_classes: 5
+    baseset_type: 'uniform_interval'
+    probabilistic_synthesis_strat: 'vRFS'
+    num_runs: 1
+
+# PIFS
+# TASK_SPECIFIC:
+#   GIFS:
+#     fine_tuning: True
+#     pseudo_base_label: False
+#     max_iter: 100
+#     num_shots: 5
+#     ft_batch_size: 10
+#     backbone_lr: 1e-3
+#     classifier_lr: 1e-3
+#     feature_reg_lambda: 0.0
+#     classifier_reg_lambda: 10.0
+#     context_aware_sampling_prob: 0.0
+#     sequential_dataset_num_classes: 5
+#     baseset_type: 'random'
+#     num_runs: 5
+
+TEST:
+  batch_size: 1

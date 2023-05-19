@@ -1,0 +1,24 @@
+name: 'GIFS_pascal_voc_1shot'
+BASE_YAML: '../pascal5i_base.yaml'
+
+# GIFS
+TASK_SPECIFIC:
+  GIFS:
+    max_iter: 200
+    num_shots: 1
+
+# PIFS
+# TASK_SPECIFIC:
+#   GIFS:
+#     fine_tuning: True
+#     pseudo_base_label: False
+#     max_iter: 100
+#     num_shots: 1
+#     ft_batch_size: 10
+#     backbone_lr: 1e-4
+#     classifier_lr: 1e-4
+#     feature_reg_lambda: 0.0
+#     classifier_reg_lambda: 5.0
+#     context_aware_sampling_prob: 0.0
+#     num_runs: 10
+#     baseset_type: 'random'

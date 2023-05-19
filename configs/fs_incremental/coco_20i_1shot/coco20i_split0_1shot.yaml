@@ -1,0 +1,6 @@
+name: 'GIFS_coco20i_split0_1shot'
+BASE_YAML: './coco20i_1shot_base.yaml'
+
+DATASET:
+  COCO20i:
+    folding: 0

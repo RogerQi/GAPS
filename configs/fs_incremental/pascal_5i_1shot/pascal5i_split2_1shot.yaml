@@ -1,0 +1,6 @@
+name: 'GIFS_pascal_voc_split2'
+BASE_YAML: './pascal5i_1shot_base.yaml'
+
+DATASET:
+  PASCAL5i:
+    folding: 2

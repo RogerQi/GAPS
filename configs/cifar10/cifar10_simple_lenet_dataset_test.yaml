@@ -1,0 +1,48 @@
+name: 'cifar10_lenet'
+task: 'classification'
+input_dim: (3, 32, 32)
+num_classes: 10
+save_model: False
+
+BACKBONE:
+  network: 'lenet'
+  pooling: True
+
+CLASSIFIER:
+  classifier: "fc"
+  FC:
+    bias: False
+    hidden_layers: (128, )
+
+LOSS:
+  loss: 'cross_entropy'
+
+DATASET:
+  dataset: 'cifar10'
+  TRANSFORM:
+    TRAIN:
+      transforms: ('random_crop', 'random_horizontal_flip', 'normalize')
+      TRANSFORMS_DETAILS:
+        NORMALIZE:
+          mean: (0.4914, 0.4822, 0.4465)
+          sd: (0.2023, 0.1994, 0.2010)
+    TEST:
+      transforms: ('normalize', )
+      TRANSFORMS_DETAILS:
+        NORMALIZE:
+          mean: (0.4914, 0.4822, 0.4465)
+          sd: (0.2023, 0.1994, 0.2010)
+
+TRAIN:
+  max_epochs: 14
+  batch_size: 64
+  initial_lr: 1.0
+  lr_scheduler: "step_down"
+  step_down_gamma: 0.7
+  step_down_on_epoch: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+  OPTIMIZER:
+    type: 'adadelta'
+
+
+TEST:
+  batch_size: 1000

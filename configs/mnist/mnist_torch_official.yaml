@@ -1,0 +1,48 @@
+name: 'pytorch_mnist_lenet'
+task: 'classification'
+input_dim: (1, 28, 28)
+num_classes: 10
+save_model: False
+
+BACKBONE:
+  network: 'lenet'
+  pooling: True
+
+CLASSIFIER:
+  classifier: "fc"
+  FC:
+    bias: False
+    hidden_layers: (128, )
+
+LOSS:
+  loss: 'cross_entropy'
+
+DATASET:
+  dataset: 'mnist'
+  TRANSFORM:
+    TRAIN:
+      transforms: ('normalize', )
+      TRANSFORMS_DETAILS:
+        NORMALIZE:
+          mean: (0.1307,)
+          sd: (0.3081,)
+    TEST:
+      transforms: ('normalize', )
+      TRANSFORMS_DETAILS:
+        NORMALIZE:
+          mean: (0.1307,)
+          sd: (0.3081,)
+
+TRAIN:
+  max_epochs: 14
+  batch_size: 64
+  initial_lr: 1.0
+  lr_scheduler: "step_down"
+  step_down_gamma: 0.7
+  step_down_on_epoch: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+  OPTIMIZER:
+    type: "adadelta"
+
+
+TEST:
+  batch_size: 1000

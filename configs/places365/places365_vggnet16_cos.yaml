@@ -1,0 +1,50 @@
+name: 'places365_vggnet16_cos'
+task: 'classification'
+input_dim: (3, 224, 224)
+num_classes: 365
+save_model: True
+
+BACKBONE:
+  network: 'vgg16'
+  pooling: True
+  use_pretrained: True
+  pretrained_path: "/data/pretrained_model/vgg16-397923af.pth"
+
+CLASSIFIER:
+  classifier: "cos"
+
+LOSS:
+  loss: 'cross_entropy'
+
+DATASET:
+  dataset: 'places365_stanford'
+  TRANSFORM:
+    TRAIN:
+      transforms: ('random_crop', 'random_horizontal_flip', 'normalize')
+      TRANSFORMS_DETAILS:
+        NORMALIZE:
+          mean: (0.485, 0.456, 0.406)
+          sd: (0.229, 0.224, 0.225)
+        crop_size: (224, 224)
+    TEST:
+      transforms: ('center_crop', 'normalize')
+      TRANSFORMS_DETAILS:
+        NORMALIZE:
+          mean: (0.485, 0.456, 0.406)
+          sd: (0.229, 0.224, 0.225)
+        crop_size: (224, 224)
+
+TRAIN:
+  max_epochs: 6
+  batch_size: 64
+  initial_lr: 1e-2
+  lr_scheduler: "polynomial"
+  log_interval: 5000
+  OPTIMIZER:
+    type: "SGD"
+    momentum: 0.9
+    weight_decay: 1e-4
+
+
+TEST:
+  batch_size: 64

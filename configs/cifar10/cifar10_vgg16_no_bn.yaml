@@ -1,0 +1,50 @@
+name: 'cifar10_vgg16_no_bn'
+task: 'classification'
+input_dim: (3, 32, 32)
+num_classes: 10
+save_model: False
+
+BACKBONE:
+  network: 'vgg16'
+  pooling: True
+
+CLASSIFIER:
+  classifier: "fc"
+  FC:
+    bias: False
+    hidden_layers: ()
+
+LOSS:
+  loss: 'cross_entropy'
+
+DATASET:
+  dataset: 'cifar10'
+  TRANSFORM:
+    TRAIN:
+      transforms: ('random_crop', 'random_horizontal_flip', 'normalize')
+      TRANSFORMS_DETAILS:
+        NORMALIZE:
+          mean: (0.4914, 0.4822, 0.4465)
+          sd: (0.2023, 0.1994, 0.2010)
+    TEST:
+      transforms: ('normalize',)
+      TRANSFORMS_DETAILS:
+        NORMALIZE:
+          mean: (0.4914, 0.4822, 0.4465)
+          sd: (0.2023, 0.1994, 0.2010)
+
+TRAIN:
+  max_epochs: 300
+  batch_size: 128
+  initial_lr: 0.01
+  lr_scheduler: "step_down"
+  step_down_gamma: 0.5
+  step_down_on_epoch: [30, 60, 90, 120, 150, 180, 210, 240, 270]
+  OPTIMIZER:
+    type: "SGD"
+    momentum: 0.9
+    weight_decay: 1e-4
+
+
+TEST:
+  batch_size: 500

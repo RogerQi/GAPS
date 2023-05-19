@@ -1,0 +1,42 @@
+name: 'cifar10_resnet18'
+task: 'classification'
+input_dim: (3, 32, 32)
+num_classes: 10
+save_model: False
+
+BACKBONE:
+  network: 'resnet18'
+  pooling: True
+
+CLASSIFIER:
+  classifier: "fc"
+  FC:
+    bias: False
+    hidden_layers: ()
+
+LOSS:
+  loss: 'cross_entropy'
+
+DATASET:
+  dataset: 'cifar10'
+  TRANSFORM:
+    TRAIN:
+      transforms: ('random_crop', 'random_horizontal_flip')
+    TEST:
+      transforms: ('none', )
+
+TRAIN:
+  max_epochs: 200
+  batch_size: 128
+  initial_lr: 0.1
+  lr_scheduler: "step_down"
+  step_down_gamma: 0.1
+  step_down_on_epoch: [100, 150]
+  OPTIMIZER:
+    type: "SGD"
+    momentum: 0.9
+    weight_decay: 1e-4
+
+
+TEST:
+  batch_size: 1000
