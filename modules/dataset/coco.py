@@ -107,7 +107,7 @@ class COCOSeg(datasets.vision.VisionDataset):
 
     def _get_seg_mask(self, fname: str):
         deleted_idx = [91, 83, 71, 69, 68, 66, 45, 30, 29, 26, 12]
-        raw_lbl = np.array(Image.open(fname)).astype(np.int)
+        raw_lbl = np.array(Image.open(fname)).astype(int)
         ignore_idx = (raw_lbl == 255)
         raw_lbl += 1
         raw_lbl[raw_lbl > 91] = 0 # STUFF classes are mapped to background
