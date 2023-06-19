@@ -18,7 +18,6 @@ from backbone.deeplabv3_renorm import BatchRenorm2d
 import utils
 
 from .sequential_GIFS_seg_trainer import sequential_GIFS_seg_trainer
-from IPython import embed
 
 def harmonic_mean(base_iou, novel_iou):
     return 2 / (1. / base_iou + 1. / novel_iou)
