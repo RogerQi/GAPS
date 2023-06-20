@@ -1,0 +1,9 @@
+numpy
+scipy
+Pillow
+pycocotools
+PyYAML
+tqdm
+yacs
+opencv-python
+imgviz
