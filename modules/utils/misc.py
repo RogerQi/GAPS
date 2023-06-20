@@ -11,10 +11,8 @@ def get_dataset_root():
     try:
         return os.environ['DATASET_ROOT']
     except KeyError:
-        if os.path.exists('/root/autodl-tmp'):
-            return '/root/autodl-tmp'
-        elif os.path.exists('/data'):
-            return '/data'
+        if os.path.exists('./data'):
+            return './data'
         else:
             raise Exception("Data dir not found. Please specify data base dir in $DATASET_ROOT")
 

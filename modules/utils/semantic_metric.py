@@ -4,8 +4,6 @@ import numpy as np
 import torch
 import matplotlib.pyplot as plt
 
-from IPython import embed
-
 IGNORE_LABEL = -1
 eps=1e-10
 
