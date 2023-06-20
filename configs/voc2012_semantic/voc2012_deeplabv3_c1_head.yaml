@@ -11,7 +11,7 @@ BACKBONE:
   network: 'deeplabv3_resnet101'
   pooling: False
   use_pretrained: True
-  pretrained_path: "/data/pretrained_model/resnet101-5d3b4d8f.pth"
+  pretrained_path: "./pretrained_model/resnet101-5d3b4d8f.pth"
 
 CLASSIFIER:
   classifier: "plain_c1"
