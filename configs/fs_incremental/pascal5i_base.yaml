@@ -62,7 +62,7 @@ TASK_SPECIFIC:
     pseudo_base_label: False
     max_iter: 200
     num_shots: 5
-    ft_batch_size: 16
+    ft_batch_size: 10
     backbone_lr: 1e-3
     classifier_lr: 1e-2
     feature_reg_lambda: 0.1
