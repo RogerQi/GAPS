@@ -98,16 +98,16 @@ Empirically, the entire base learning stage takes approximately 5 days on a mach
 
 If you want to skip base learning, you can find weights trained from the base stage in the table below.
 
-| Dataset | Base IoU | Novel IoU | Base weights |
-| --- | --- | --- | --- |
-| Pascal-5-0 | TBD | TBD | [box](https://uofi.box.com/s/qwjpio1xubzp2h87vzmnosvff3kt2sfz) |
-| Pascal-5-1 | TBD | TBD | [box](https://uofi.box.com/s/3b4opya1qmhztnn2mxaqjce32izvuvep) |
-| Pascal-5-2 | TBD | TBD | [box](https://uofi.box.com/s/s9tb3jcl2n1vi73iu2e482to1txfhyhs) |
-| Pascal-5-3 | TBD | TBD | [box](https://uofi.box.com/s/1fhmkne8pm8l8ucsg4uazlisioito8f1) |
-| COCO-20-0  | TBD | TBD | [box](https://uofi.box.com/s/wnk7rscz9py9hkufqr78d130s8o3mgtx) |
-| COCO-20-1  | TBD | TBD | [box](https://uofi.box.com/s/ccrosqwpks20ik5u50btxyfhf5776mjn) |
-| COCO-20-2  | TBD | TBD | [box](https://uofi.box.com/s/83fgz1jxjrgxyb1i6ff4f8oowubr74vb) |
-| COCO-20-3  | TBD | TBD | [box](https://uofi.box.com/s/y8hlhvzhseomtj6fjutyylt68v8jl1e6) |
+| Dataset | Base weights |
+| --- | --- |
+| Pascal-5-0 | [box](https://uofi.box.com/s/qwjpio1xubzp2h87vzmnosvff3kt2sfz) |
+| Pascal-5-1 | [box](https://uofi.box.com/s/3b4opya1qmhztnn2mxaqjce32izvuvep) |
+| Pascal-5-2 | [box](https://uofi.box.com/s/s9tb3jcl2n1vi73iu2e482to1txfhyhs) |
+| Pascal-5-3 | [box](https://uofi.box.com/s/1fhmkne8pm8l8ucsg4uazlisioito8f1) |
+| COCO-20-0  | [box](https://uofi.box.com/s/wnk7rscz9py9hkufqr78d130s8o3mgtx) |
+| COCO-20-1  | [box](https://uofi.box.com/s/ccrosqwpks20ik5u50btxyfhf5776mjn) |
+| COCO-20-2  | [box](https://uofi.box.com/s/83fgz1jxjrgxyb1i6ff4f8oowubr74vb) |
+| COCO-20-3  | [box](https://uofi.box.com/s/y8hlhvzhseomtj6fjutyylt68v8jl1e6) |
 
 ## Incremental learning stage
 
@@ -119,3 +119,5 @@ python3 main/test.py --cfg configs/fs_incremental/pascal5i_split3_5shot.yaml --l
 ```
 
 and you should see the results. Note that the diversity-guided exemplar selection requires computation of prototype of every image in the base training stage, which requires roughly 15 minutes on the first time one runs incremental learning on a split.
+
+Following PIFS, the reported base and novel IoU are averaged across results after each single incremental learning task, masking unseen classes. To obtain the results reported in the paper, you need to follow the same procedure.
